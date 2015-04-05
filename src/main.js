@@ -25,14 +25,16 @@ var config = {
                     name: 'Jahed',
                     url: 'http://jahed.io/'
                 },
-                url: 'http://blog.jahed.io/tagged/devlog/rss'
+                url: 'http://blog.jahed.io/tagged/devlog/rss',
+                limit: 3
             },
             {
                 author: {
                     name: 'GitHub',
                     url: 'http://github.com/'
                 },
-                url: 'http://github.com/jahed.atom'
+                url: 'http://github.com/jahed.atom',
+                limit: 3
             }
         ]
     },
@@ -59,7 +61,8 @@ var config = {
 var promises = config.sources.map(function(source) {
     return new Promise(function(resolve, reject) {
         var req = request(source.url),
-            feedparser = new FeedParser();
+            feedparser = new FeedParser(),
+            articlesAdded = 0;
 
         console.log('Getting feed for ' + source.url);
 
@@ -82,12 +85,17 @@ var promises = config.sources.map(function(source) {
                 meta = this.meta,
                 article;
 
-            meta.date = meta.date || new Date();
-            meta.xmlurl = meta.xmlurl || source.url;
-
             while(article = stream.read()) {
+                if(source.limit && articlesAdded >= source.limit) {
+                    break;
+                }
+
+                meta.date = meta.date || new Date();
+                meta.xmlurl = meta.xmlurl || source.url;
+
                 article.author = article.author || source.author.name;
                 locals.articles.push(article);
+                articlesAdded++;
             }
         });
 
