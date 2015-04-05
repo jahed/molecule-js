@@ -1,15 +1,15 @@
 {
-  "name": "molecule",
+  "name": "molecule-js",
   "version": "0.0.1",
   "description": "RSS / Atom Blog Feed Aggregator",
   "author": "Jahed Ahmed",
-  "homepage": "http://jahed.github.io/molecule",
+  "homepage": "http://jahed.github.io/molecule-js",
   "bugs": {
-    "url" : "http://github.com/jahed/molecule/issues"
+    "url" : "http://github.com/jahed/molecule-js/issues"
   },
   "repository" : {
     "type" : "git",
-    "url" : "http://github.com/jahed/molecule.git"
+    "url" : "http://github.com/jahed/molecule-js.git"
   },
   "license": "MIT",
   "keywords": [
