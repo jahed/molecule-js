@@ -1,9 +1,13 @@
 {
   "name": "molecule-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "RSS / Atom Blog Feed Aggregator",
-  "author": "Jahed Ahmed",
-  "homepage": "http://jahed.github.io/molecule-js",
+  "author": {
+    "name": "Jahed Ahmed",
+    "email": "jahed.public+npm@gmail.com",
+    "url": "http://jahed.io"
+  },
+  "homepage": "http://github.com/jahed/molecule-js",
   "bugs": {
     "url" : "http://github.com/jahed/molecule-js/issues"
   },
@@ -13,14 +17,13 @@
   },
   "license": "MIT",
   "keywords": [
-    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed"
+    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed", "molecule"
   ],
   "main": "./src/main.js",
   "bin": {
     "molecule": "./src/cli.js"
   },
   "scripts": {
-    "start": "node ./src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
