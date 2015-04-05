@@ -1,0 +1,73 @@
+doctype xml
+feed(xmlns="http://www.w3.org/2005/Atom")
+
+  title= title
+  if description
+    subtitle= description
+  if favicon
+    icon= favicon
+  if image
+    logo= image
+  if link
+    link(href=link)/
+  link(rel='self',  href=feeds.atom.url)/
+  id= feeds.atom.url
+  updated= date.toISOString()
+  each author in authors
+    author
+      name= author.name
+      if author.url
+        uri= author.url
+      if author.email
+        email= author.email
+  for source in sources
+    if source.author
+      contributor
+        name= source.author
+        if source.url
+          uri= source.url
+  each category in categories
+    category(term=category)
+  if copyright
+    rights=copyright
+
+  generator(uri=molecule.url, version=molecule.version)= molecule.name
+
+  for article in articles
+    entry
+      title= article.title
+      if article.link
+        link(href=article.link)/
+      if article.comments
+        link(rel="replies", href=article.comments)/
+      id= article.guid
+      if article.pubdate
+        published= article.pubdate.toISOString()
+      updated= article.date.toISOString()
+      if article.summary
+        summary(type="html")= article.summary
+      if article.content
+        content(type="html")= article.description
+      if article.author
+        author
+          name= article.author
+      each category in article.categories
+        category(term=category)
+      source
+        title= article.meta.title
+        if article.meta.description
+          subtitle=article.meta.description
+        if article.meta.xmlurl
+          link(rel='self', href=article.meta.xmlurl)/
+        if article.meta.link
+          link(href=article.meta.link)/
+        id= article.meta.xmlurl ||  article.meta.link
+        if article.meta.date
+          updated= article.meta.date.toISOString()
+        each category in article.meta.categories
+          category(term=category)
+        if article.meta.author
+          author
+            name= article.meta.author.name
+        if article.meta.copyright
+          rights=article.meta.copyright
