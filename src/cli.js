@@ -1,3 +1,5 @@
+#!/bin/node
+
 var packageJson = require('../package.json'),
     Molecule = require('./main'),
     argv = require('minimist')(process.argv.slice(2), {
