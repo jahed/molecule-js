@@ -10,11 +10,6 @@ var config = {
             title: 'An Aggregated Blog',
             description: 'A test site for checking this project.',
             url: 'http://example.com',
-            authors: [
-                {
-                    name: 'Jahed'
-                }
-            ],
             feeds: {
                 atom: {
                     url: 'http://example.com/atom.xml'
@@ -55,7 +50,9 @@ var config = {
         feeds: config.site.feeds,
         date: new Date(),
         categories: config.site.categories,
-        sources: [],
+        contributors: config.sources.map(function(source) {
+            return source.author;
+        }),
         articles: []
     };
 
@@ -85,24 +82,11 @@ var promises = config.sources.map(function(source) {
                 meta = this.meta,
                 article;
 
-            if(!meta.date) {
-                meta.date = new Date();
-            }
-
-            if(!meta.xmlurl) {
-                meta.xmlurl = source.url;
-            }
-
-            if(locals.sources.filter(function(source) {
-                    return source.id === meta.id;
-                }).length === 0) {
-                locals.sources.push(meta);
-            }
+            meta.date = meta.date || new Date();
+            meta.xmlurl = meta.xmlurl || source.url;
 
             while(article = stream.read()) {
-                if(!article.author) {
-                    article.author = source.author.name;
-                }
+                article.author = article.author || source.author.name;
                 locals.articles.push(article);
             }
         });

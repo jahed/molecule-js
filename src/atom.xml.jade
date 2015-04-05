@@ -13,19 +13,11 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   link(rel='self',  href=feeds.atom.url)/
   id= feeds.atom.url
   updated= date.toISOString()
-  each author in authors
-    author
-      name= author.name
-      if author.url
-        uri= author.url
-      if author.email
-        email= author.email
-  for source in sources
-    if source.author
-      contributor
-        name= source.author
-        if source.url
-          uri= source.url
+  for contributor in contributors
+    contributor
+      name= contributor.name
+      if contributor.url
+        uri= contributor.url
   each category in categories
     category(term=category)
   if copyright
