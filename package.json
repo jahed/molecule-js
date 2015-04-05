@@ -1,6 +1,6 @@
 {
   "name": "molecule-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "RSS / Atom Blog Feed Aggregator",
   "author": "Jahed Ahmed",
   "homepage": "http://jahed.github.io/molecule-js",
@@ -17,7 +17,7 @@
   ],
   "main": "./src/main.js",
   "bin": {
-    "molecule": "./src/main.js"
+    "molecule": "./src/cli.js"
   },
   "scripts": {
     "start": "node ./src/main.js",
