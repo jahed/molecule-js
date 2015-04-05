@@ -2,11 +2,10 @@ var FeedParser = require('feedparser'),
     request = require('request'),
     jade = require('jade'),
     fs = require('fs'),
+    Promise = require('bluebird'),
     packageJson = require('../package.json');
 
-var req = request('http://blog.jahed.io/rss'),
-    feedparser = new FeedParser(),
-    config = {
+var config = {
         site: {
             title: 'An Aggregated Blog',
             description: 'A test site for checking this project.',
@@ -31,7 +30,14 @@ var req = request('http://blog.jahed.io/rss'),
                     name: 'Jahed',
                     url: 'http://jahed.io/'
                 },
-                url: 'http://blog.jahed.io/devlog/rss'
+                url: 'http://blog.jahed.io/tagged/devlog/rss'
+            },
+            {
+                author: {
+                    name: 'GitHub',
+                    url: 'http://github.com/'
+                },
+                url: 'http://github.com/jahed.atom'
             }
         ]
     },
@@ -53,55 +59,82 @@ var req = request('http://blog.jahed.io/rss'),
         articles: []
     };
 
-req.on('error', function (error) {
-    console.log(error);
-});
+var promises = config.sources.map(function(source) {
+    return new Promise(function(resolve, reject) {
+        var req = request(source.url),
+            feedparser = new FeedParser();
 
-req.on('response', function (res) {
-    var stream = this;
+        console.log('Getting feed for ' + source.url);
 
-    if (res.statusCode != 200) {
-        return this.emit('error', new Error('Bad status code'));
-    }
+        req.on('response', function (res) {
+            var stream = this;
 
-    console.log('Got feed for ' + res.request.href);
+            if (res.statusCode != 200) {
+                var err = new Error('Received status code ' + res.statusCode);
+                err.res = res;
+                return this.emit('error', err);
+            }
 
-    stream.pipe(feedparser);
-});
+            console.log('Got feed for ' + source.url);
 
+            stream.pipe(feedparser);
+        });
 
-feedparser.on('error', function(error) {
-    console.log(error);
-});
+        feedparser.on('readable', function() {
+            var stream = this,
+                meta = this.meta,
+                article;
 
-feedparser.on('readable', function() {
-    var stream = this,
-        meta = this.meta,
-        article;
+            if(!meta.date) {
+                meta.date = new Date();
+            }
 
-    if(!meta.date) {
-        meta.date = new Date()
-    }
+            if(!meta.xmlurl) {
+                meta.xmlurl = source.url;
+            }
 
-    if(locals.sources.filter(function(source) {
-        return source.id === meta.id;
-    }).length === 0) {
-        locals.sources.push(meta);
-    }
+            if(locals.sources.filter(function(source) {
+                    return source.id === meta.id;
+                }).length === 0) {
+                locals.sources.push(meta);
+            }
 
-    while(article = stream.read()) {
-        locals.articles.push(article);
-    }
-});
+            while(article = stream.read()) {
+                if(!article.author) {
+                    article.author = source.author.name;
+                }
+                locals.articles.push(article);
+            }
+        });
 
-feedparser.on('end', function() {
-    var html = jade.renderFile('./src/atom.xml.jade', locals);
+        feedparser.on('end', function() {
+            resolve();
+        });
 
-    fs.writeFile("./build/atom.xml", html, function(err) {
-        if(err) {
-            return console.log(err);
+        req.on('error', rejectOnError);
+        feedparser.on('error', rejectOnError);
+
+        function rejectOnError(err) {
+            err.source = source;
+            reject(err);
         }
-
-        console.log("The file was saved!");
     });
 });
+
+Promise.all(promises)
+    .then(function () {
+
+        locals.articles.sort(function(articleA, articleB) {
+            return articleB.date - articleA.date;
+        });
+
+        var html = jade.renderFile('./src/atom.xml.jade', locals);
+
+        return Promise.promisify(fs.writeFile)("./build/atom.xml", html)
+            .then(function() {
+                console.log("The file was saved!");
+            });
+    })
+    .catch(function(err) {
+        console.error(err);
+    });

@@ -11,6 +11,7 @@
   "dependencies": {
     "feedparser": "~1.0.0",
     "request": "~2.55.0",
-    "jade": "~1.9.2"
+    "jade": "~1.9.2",
+    "bluebird": "~2.9.24"
   }
 }

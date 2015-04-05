@@ -57,11 +57,10 @@ feed(xmlns="http://www.w3.org/2005/Atom")
         title= article.meta.title
         if article.meta.description
           subtitle=article.meta.description
-        if article.meta.xmlurl
-          link(rel='self', href=article.meta.xmlurl)/
+        link(rel='self', href=article.meta.xmlurl)/
         if article.meta.link
           link(href=article.meta.link)/
-        id= article.meta.xmlurl ||  article.meta.link
+        id= article.meta.xmlurl
         if article.meta.date
           updated= article.meta.date.toISOString()
         each category in article.meta.categories
