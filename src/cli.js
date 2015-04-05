@@ -26,8 +26,7 @@ if(argv.help) {
     console.log('  --pretty, -p');
     console.log('    Disables minification');
     console.log('  --output, -o <build directory>');
-    console.log('    Changes ./build location.');
-    console.log('    Default: config directory');
+    console.log('    Default: <config directory>/build/');
     console.log();
     return;
 }
