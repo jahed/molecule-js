@@ -9,7 +9,7 @@ var FeedParser = require('feedparser'),
 var CONFIG_FILENAME = 'config.json';
 
 function Molecule(configDir, options) {
-    if(!this instanceof Molecule) {
+    if(!(this instanceof Molecule)) {
         throw new Error('Molecule is a constructor so call it with "new".');
     }
 
