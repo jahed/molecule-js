@@ -1,17 +1,33 @@
 {
   "name": "molecule",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "RSS / Atom Blog Feed Aggregator",
+  "author": "Jahed Ahmed",
+  "homepage": "http://jahed.github.io/molecule",
+  "bugs": {
+    "url" : "http://github.com/jahed/molecule/issues"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/jahed/molecule.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed"
+  ],
+  "main": "./src/main.js",
+  "bin": {
+    "molecule": "./src/main.js"
+  },
   "scripts": {
+    "start": "node ./src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jahed",
-  "license": "MIT",
   "dependencies": {
     "feedparser": "~1.0.0",
     "request": "~2.55.0",
     "jade": "~1.9.2",
-    "bluebird": "~2.9.24"
+    "bluebird": "~2.9.24",
+    "minimist": "~1.1.1"
   }
 }

@@ -1,0 +1,33 @@
+{
+  "site": {
+    "title": "An Aggregated Blog",
+    "description": "A test site for checking this project.",
+    "url": "http://example.com",
+    "feeds": {
+      "atom": {
+        "url": "http://example.com/atom.xml"
+      }
+    },
+    "categories": [
+      "tech"
+    ]
+  },
+  "sources": [
+    {
+      "author": {
+        "name": "Jahed",
+        "url": "http://jahed.io/"
+      },
+      "url": "http://blog.jahed.io/tagged/devlog/rss",
+      "limit": 3
+    },
+    {
+      "author": {
+        "name": "GitHub",
+        "url": "http://github.com/"
+      },
+      "url": "http://github.com/jahed.atom",
+      "limit": 3
+    }
+  ]
+}

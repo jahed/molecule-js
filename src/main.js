@@ -2,45 +2,51 @@ var FeedParser = require('feedparser'),
     request = require('request'),
     jade = require('jade'),
     fs = require('fs'),
+    path = require('path'),
     Promise = require('bluebird'),
-    packageJson = require('../package.json');
+    packageJson = require('../package.json'),
+    argv = require('minimist')(process.argv.slice(2), {
+        string: ['output'],
+        boolean: ['pretty', 'help', 'version'],
+        alias: {
+            'pretty': ['p'],
+            'output': ['o'],
+            'help': ['h'],
+            'version': ['v']
+        }
+    });
 
-var config = {
-        site: {
-            title: 'An Aggregated Blog',
-            description: 'A test site for checking this project.',
-            url: 'http://example.com',
-            feeds: {
-                atom: {
-                    url: 'http://example.com/atom.xml'
-                }
-            },
-            categories: [
-                'tech'
-            ]
-        },
-        sources: [
-            {
-                author: {
-                    name: 'Jahed',
-                    url: 'http://jahed.io/'
-                },
-                url: 'http://blog.jahed.io/tagged/devlog/rss',
-                limit: 3
-            },
-            {
-                author: {
-                    name: 'GitHub',
-                    url: 'http://github.com/'
-                },
-                url: 'http://github.com/jahed.atom',
-                limit: 3
-            }
-        ]
-    },
-    locals = {
-        pretty: true,
-        filename: 'atom.xml.jade',
+if(argv.version) {
+    console.log(packageJson.name + ' ' + packageJson.version);
+    return;
+}
+
+if(argv.help) {
+    console.log();
+    console.log('molecule [options] <config directory>');
+    console.log();
+    console.log('Options:');
+    console.log('  --pretty, -p');
+    console.log('    Disables minification');
+    console.log('  --output, -o <build directory>');
+    console.log('    Changes ./build location.');
+    console.log('    Default: config directory');
+    console.log();
+    return;
+}
+
+var configDir = argv._[0],
+    templateDir = path.join(configDir, './templates/'),
+    buildDir = argv.output ? argv.output : path.join(configDir, './build/');
+
+var config = JSON.parse(fs.readFileSync(path.join(configDir, './config.json')));
+
+if(!fs.existsSync(buildDir)) {
+    fs.mkdirSync(buildDir);
+}
+
+var locals = {
+        pretty: argv.pretty,
         molecule: {
             version: packageJson.version,
             name: packageJson.name,
@@ -115,16 +121,24 @@ var promises = config.sources.map(function(source) {
 
 Promise.all(promises)
     .then(function () {
+        var jadeExt = '.jade';
 
         locals.articles.sort(function(articleA, articleB) {
             return articleB.date - articleA.date;
         });
 
-        var html = jade.renderFile('./src/atom.xml.jade', locals);
+        return fs.readdirSync(templateDir)
+            .filter(function(file) {
+                return path.extname(file) === jadeExt;
+            })
+            .map(function(file) {
+                var outputPath = path.join(buildDir, path.basename(file, jadeExt));
+                var output = jade.renderFile(path.join(templateDir, file), locals);
 
-        return Promise.promisify(fs.writeFile)("./build/atom.xml", html)
-            .then(function() {
-                console.log("The file was saved!");
+                return Promise.promisify(fs.writeFile)(outputPath, output)
+                    .then(function() {
+                        console.log(outputPath + ' built.');
+                    });
             });
     })
     .catch(function(err) {
