@@ -24,7 +24,7 @@
     "molecule": "./src/cli.js"
   },
   "scripts": {
-    "test": "./src/cli.js ./config"
+    "test": "pwd && src/cli.js config"
   },
   "dependencies": {
     "feedparser": "~1.0.0",
