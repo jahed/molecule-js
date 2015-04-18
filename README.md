@@ -8,8 +8,30 @@ RSS / Atom Feed Blog Aggregator
 
 ## Installation
 
+### Global
+
 ```sh
-sudo npm install -g molecule-js
+npm install -g molecule-js
+```
+
+### Local
+
+You can also install Molecule per-project, just run
+
+```sh
+npm install molecule-js
+```
+
+and use `./node_modules/.bin/molecule` as the command.
+
+### Programmatic
+
+To use Molecule programmatically, see `./src/cli.js` as an example.
+
+```js
+var molecule = new Molecule(pathToConfigDir, options);
+//...
+molecule.build();
 ```
 
 ## Usage
@@ -51,4 +73,3 @@ Templates have a naming scheme:
 ------------- | -------------
 atom.xml.jade | atom.xml
 README.jade   | README
-
