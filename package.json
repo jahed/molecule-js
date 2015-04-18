@@ -24,7 +24,7 @@
     "molecule": "./src/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./src/cli.js ./config"
   },
   "dependencies": {
     "feedparser": "~1.0.0",
