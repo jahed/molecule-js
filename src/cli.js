@@ -1,4 +1,4 @@
-#!/bin/node
+#!/usr/bin/env node
 
 var packageJson = require('../package.json'),
     Molecule = require('./main'),
