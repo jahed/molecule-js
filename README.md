@@ -1,4 +1,7 @@
 # Molecule
+
+[![Build Status](https://travis-ci.org/jahed/molecule-js.svg?branch=master)](https://travis-ci.org/jahed/molecule-js)
+
 RSS / Atom Feed Blog Aggregator
 
 ## Dependencies
@@ -73,3 +76,7 @@ Templates have a naming scheme:
 ------------- | -------------
 atom.xml.jade | atom.xml
 README.jade   | README
+
+## License
+
+See `LICENSE`
