@@ -1,6 +1,7 @@
 # Molecule
 
-[![Build Status](https://travis-ci.org/jahed/molecule-js.svg?branch=master)](https://travis-ci.org/jahed/molecule-js)
+[![Build Status](https://img.shields.io/travis/jahed/molecule-js.svg)](https://travis-ci.org/jahed/molecule-js)
+[![NPM Release](https://img.shields.io/npm/dt/molecule-js.svg)](https://www.npmjs.com/package/molecule-js)
 
 RSS / Atom Feed Blog Aggregator
 
