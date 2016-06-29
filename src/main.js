@@ -1,6 +1,6 @@
 var FeedParser = require('feedparser'),
     request = require('request'),
-    jade = require('jade'),
+    pug = require('pug'),
     fs = require('fs'),
     path = require('path'),
     Promise = require('bluebird'),
@@ -101,7 +101,7 @@ Molecule.prototype.build = function build() {
             return allArticles.concat(articles);
         })
         .then(function(articles) {
-            var jadeExt = '.jade';
+            var pugExt = '.pug';
 
             articles.sort(function(articleA, articleB) {
                 return articleB.date - articleA.date;
@@ -115,11 +115,11 @@ Molecule.prototype.build = function build() {
 
             return fs.readdirSync(this.templateDir)
                 .filter(function(file) {
-                    return path.extname(file) === jadeExt;
+                    return path.extname(file) === pugExt;
                 })
                 .map(function(file) {
-                    var outputPath = path.join(this.buildDir, path.basename(file, jadeExt));
-                    var output = jade.renderFile(path.join(this.templateDir, file), this.locals);
+                    var outputPath = path.join(this.buildDir, path.basename(file, pugExt));
+                    var output = pug.renderFile(path.join(this.templateDir, file), this.locals);
 
                     return Promise.promisify(fs.writeFile)(outputPath, output)
                         .then(function() {

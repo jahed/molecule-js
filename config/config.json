@@ -18,7 +18,7 @@
         "name": "Jahed",
         "url": "http://jahed.io/"
       },
-      "url": "http://blog.jahed.io/tagged/devlog/rss",
+      "url": "http://jahed.io/blog/feed.xml",
       "limit": 3
     },
     {

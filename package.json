@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "keywords": [
-    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed", "molecule"
+    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed", "molecule", "pug"
   ],
   "main": "./src/main.js",
   "bin": {
@@ -27,10 +27,10 @@
     "test": "./src/cli.js ./config"
   },
   "dependencies": {
-    "feedparser": "~1.0.0",
-    "request": "~2.55.0",
-    "jade": "~1.9.2",
-    "bluebird": "~2.9.24",
-    "minimist": "~1.1.1"
+    "feedparser": "^1.0.0",
+    "request": "^2.55.0",
+    "pug": "^0.1.0",
+    "bluebird": "^2.9.24",
+    "minimist": "^1.1.1"
   }
 }

@@ -62,7 +62,7 @@ Path          | Description
 
 #### Templates
 
-Currently only [Jade](http://jade-lang.com/) templates are supported.
+Currently only [Pug (previous known as Jade)](http://jade-lang.com/) templates are supported.
 Support for other engines might be added if they're needed.
 
 Currently directories in the `templates` directory aren't supported.
@@ -74,8 +74,8 @@ Templates have a naming scheme:
 
 ./templates/  | ./build/
 ------------- | -------------
-atom.xml.jade | atom.xml
-README.jade   | README
+atom.xml.pug  | atom.xml
+README.pug    | README
 
 ## License
 
