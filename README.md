@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/jahed/molecule-js.svg)](https://travis-ci.org/jahed/molecule-js)
 [![NPM Release](https://img.shields.io/npm/dt/molecule-js.svg)](https://www.npmjs.com/package/molecule-js)
+[![Patreon](https://img.shields.io/badge/patreon-donate-f96854.svg)](https://www.patreon.com/jahed)
 
 RSS / Atom Feed Blog Aggregator
 
