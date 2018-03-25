@@ -9,15 +9,23 @@
   },
   "homepage": "http://github.com/jahed/molecule-js",
   "bugs": {
-    "url" : "http://github.com/jahed/molecule-js/issues"
+    "url": "http://github.com/jahed/molecule-js/issues"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "http://github.com/jahed/molecule-js.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jahed/molecule-js.git"
   },
   "license": "MIT",
   "keywords": [
-    "blog", "atom", "rss", "aggregator", "planet", "generator", "feed", "molecule", "pug"
+    "blog",
+    "atom",
+    "rss",
+    "aggregator",
+    "planet",
+    "generator",
+    "feed",
+    "molecule",
+    "pug"
   ],
   "main": "./src/main.js",
   "bin": {
@@ -29,7 +37,7 @@
   "dependencies": {
     "feedparser": "^1.0.0",
     "request": "^2.55.0",
-    "pug": "^0.1.0",
+    "pug": "^2.0.0",
     "bluebird": "^2.9.24",
     "minimist": "^1.1.1"
   }
